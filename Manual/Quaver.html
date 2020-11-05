@@ -10,53 +10,6 @@
     <link rel="stylesheet" type="text/css" href="css/font.css">
     <script src="js/ktane-utils.js"></script>
 </head>
-<style>
-        .black {
-            background-color: #000000;
-			color: white;
-			border: 0px;
-        }
-		
-		.red {
-            background-color: #FF3333;
-			border: 2px solid black;
-        }
-		
-		.blue {
-            background-color: #3366FF;
-			border: 2px solid black;
-        }
-		
-		.green {
-            background-color: #33FF33;
-			border: 2px solid black;
-        }
-		
-		.yellow {
-            background-color: #FFFF33;
-			border: 2px solid black;
-        }
-		
-		.magenta {
-            background-color: #FF33FF;
-			border: 2px solid black;
-        }
-		
-		.orange {
-            background-color: #FF9933;
-			border: 2px solid black;
-        }
-		
-		.cyan {
-            background-color: #33FFFF;
-			border: 2px solid black;
-        }
-		
-		.gray {
-            background-color: #999999;
-			border: 2px solid black;
-        }
-</style>
 <body>
     <div id="ManualContent">
         <div class="section">
@@ -76,80 +29,44 @@
 					</ul>
 
 					<h3>Mod select</h3>
-					<li>The module will start in the mod selection screen.</li>
-					<li>There are 3 different modifiers which the defuser can freely customize.</li>
-					<ol>
-						<li>Speed: Rate of the notes falling. (1.0x-2.0x)</li>
-						<li>Difficulty: Difficulty of patterns. (Normal, Hard, Insane, Expert)</li>
-						<li>Per Column: Require keeping track of each individual column. (On/Off)</li>
-					</ol>
-                    <li>The left and right arrow keys adjusts the currently selected modifier.</li>
-					<li>Pressing the up and down arrow keys will scroll between the modifiers.</li>
-					<li>To enter gameplay, press down past the bottom option.</li>
+					<ul>
+						<li>The module will start in the mod selection screen.</li>
+						<li>There are 3 different modifiers which the defuser can freely customize:</li>
+						<ol>
+							<li>Speed: Rate of the notes falling. (1.0x-2.0x)</li>
+							<li>Difficulty: Difficulty of patterns. (Normal, Hard, Insane, Expert)</li>
+							<li>Per Column: Require keeping track of each individual column. (On/Off)</li>
+						</ol>
+                    	<li>The left and right arrow keys adjusts the currently selected modifier.</li>
+						<li>Pressing the up and down arrow keys will scroll between the modifiers.</li>
+						<li>To enter gameplay, press down past the bottom option.</li>
+					</ul>
 
 					<h3>Gameplay</h3>
-					<li>The module will start in the mod selection screen.</li>
-					<li>There are 3 different modifiers which the defuser can freely customize.</li>
-                    <li>The left and right arrow keys adjusts the currently selected modifier.</li>
-					<li>Pressing the up and down arrow keys will scroll between the modifiers.</li>
-					<li>To enter gameplay, press down past the bottom option.</li>
+					<ul>
+						<li>Adjust the fall speed with the up and down arrow keys at the start.</li>
+						<li>Keep track of the total amount of arrows that fell.</li>
+						<ul>
+							<li>With Per Column enabled, keep track of the amount per column.</li>
+						</ul>
+						<li>A bar is shown at the bottom, once full, the module enters submission.</li>
+						<li>Press the arrow keys equal to the amount of arrows there were.</li>
+						<li>When an arrow key is pressed, a 1-second timer starts.</li>
+						<ul>
+							<li>The timer resets upon any key press.</li>
+							<li>Letting time run out submits the result.</li>
+							<li>The numbers wrap around eventually.</li>
+						</ul>
+						<li>If the submission is correct, the bar fills up based on the difficulty.</li>
+						<li>An incorrect submission gives a strike, and does not increase the bar.</li>
+					</ul>
 
-					</br>
-					<table>
-					    <tr>
-							<th colspan="14" class="black"></th>
-                        </tr>
-                        <tr>
-							<th class="black"></th>
-                            <th class="red">1</th>
-							<th class="gray">2</th>
-							<th class="cyan">3</th>
-							<th class="orange">4</th>
-							<th class="magenta">5</th>
-							<th class="gray">6</th>
-							<th class="yellow">7</th>
-							<th class="gray">8</th>
-							<th class="green">9</th>
-							<th class="orange">10</th>
-							<th class="cyan">11</th>
-							<th class="gray">12</th>
-							<th class="black"></th>
-                        </tr>
-						<tr>
-							<th class="black"></th>
-							<th class="blue">13</th>
-							<th class="gray">14</th>
-							<th class="cyan">15</th>
-							<th class="orange">16</th>
-							<th class="green">17</th>
-							<th class="gray">18</th>
-							<th class="yellow">19</th>
-							<th class="gray">20</th>
-							<th class="magenta">21</th>
-							<th class="orange">22</th>
-							<th class="cyan">23</th>
-							<th class="gray">24</th>
-							<th class="black"></th>
-						</tr>
-						<tr>
-							<th class="black"></th>
-							<th class="red">25</th>
-							<th class="gray">26</th>
-							<th class="cyan">27</th>
-							<th class="orange">28</th>
-							<th class="magenta">29</th>
-							<th class="gray">30</th>
-							<th class="yellow">31</th>
-							<th class="gray">32</th>
-							<th colspan="4" class="black">Note Sequence</th>
-							<th class="black"></th>
-						</tr>
-						<tr>
-							<th colspan="14" class="black"></th>	
-						</tr>
-					</table>
-					</br>
-					<p><i>*4-beat anacrusis = Four unstressed notes played for the Defuser to get a sense of the rhythm before the module starts tracking user input.</i></p>
+					<h3>Difficulty Calculator</h3>
+					<ul>
+						<li>The bar fills up according to this formula, 1 meaning 100% filled:</li>
+					</ul>
+					<center><h2>(D + 0.25) * S / 6</h2></center>
+					<p><i>D = [Normal = 0, Hard = 1, Insane = 2, Expert = <strong>∞</strong>], S = Speed</i></p>
                 </div>
                 <div class="page-footer relative-footer">Page 1 of 1</div>
             </div>
