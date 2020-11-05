@@ -21,52 +21,51 @@
                 <div class="page-content">
                     <img src="img/Component/Quaver.svg" class="diagram">
                     <h2>On the Subject of Quaver</h2>
-                    <p class="flavour-text">insert flavor text</p>
+                    <p class="flavour-text">Now set to permanent NLN! Wait, what do you mean that it's unranked?</p>
 
 					<ul>
 						<li>This module has a screen and arrow key cluster.</li>
-						<li>To solve this module, fill the top bar.</li>
+						<li>To solve this module, fill the top bar fully.</li>
 					</ul>
 
-					<h3>Mod select</h3>
+					<h2>Difficulty Selection</h2>
 					<ul>
-						<li>The module will start in the mod selection screen.</li>
+						<li>The module starts in the difficulty selection screen.</li>
 						<li>There are 3 different modifiers which the defuser can freely customize:</li>
 						<ol>
 							<li>Speed: Rate of the notes falling. (1.0x-2.0x)</li>
-							<li>Difficulty: Difficulty of patterns. (Normal, Hard, Insane, Expert)</li>
-							<li>Per Column: Require keeping track of each individual column. (On/Off)</li>
+							<li>Difficulty: Density of notes. (Normal, Hard, Insane, Expert)</li>
+							<li>Per Column: Require keeping track of columns individually. (On/Off)</li>
 						</ol>
                     	<li>The left and right arrow keys adjusts the currently selected modifier.</li>
 						<li>Pressing the up and down arrow keys will scroll between the modifiers.</li>
-						<li>To enter gameplay, press down past the bottom option.</li>
+						<li>Enter gameplay by pressing down past the bottom option.</li>
 					</ul>
 
-					<h3>Gameplay</h3>
+					<h2>Gameplay</h2>
 					<ul>
-						<li>Adjust the fall speed with the up and down arrow keys at the start.</li>
+						<li>Adjust the scroll speed with the up and down arrow keys at the start.</li>
 						<li>Keep track of the total amount of arrows that fell.</li>
 						<ul>
 							<li>With Per Column enabled, keep track of the amount per column.</li>
 						</ul>
-						<li>A bar is shown at the bottom, once full, the module enters submission.</li>
+						<li>When the sequence finishes, the module enters submission.</li>
 						<li>Press the arrow keys equal to the amount of arrows there were.</li>
-						<li>When an arrow key is pressed, a 1-second timer starts.</li>
+						<li>A 1-second timer starts upon a key press, and will submit when run out.</li>
 						<ul>
-							<li>The timer resets upon any key press.</li>
-							<li>Letting time run out submits the result.</li>
-							<li>The numbers wrap around eventually.</li>
+							<li>The timer resets upon any subsequent key press.</li>
+							<li>The submission numbers wrap around eventually.</li>
 						</ul>
-						<li>If the submission is correct, the bar fills up based on the difficulty.</li>
-						<li>An incorrect submission gives a strike, and does not increase the bar.</li>
+						<li>If correct, the top bar fills, otherwise a strike is incured.</li>
 					</ul>
 
-					<h3>Difficulty Calculator</h3>
+					<h2>Bar-filling Formula</h2>
 					<ul>
-						<li>The bar fills up according to this formula, 1 meaning 100% filled:</li>
+						<li>The formula used is <strong>S * D * P</strong>. 600 QR is needed to solve the module.</li>
 					</ul>
-					<center><h2>(D + 0.25) * S / 6</h2></center>
-					<p><i>D = [Normal = 0, Hard = 1, Insane = 2, Expert = <strong>∞</strong>], S = Speed</i></p>
+					<p><i>S = Speed
+					<br>D = Difficulty [Normal = 25, Hard = 125, Insane = 225, Expert = <strong>&infin;</strong>]
+					<br>P = Per Column [ON = 1, OFF = 0.5]</i></p>
                 </div>
                 <div class="page-footer relative-footer">Page 1 of 1</div>
             </div>
