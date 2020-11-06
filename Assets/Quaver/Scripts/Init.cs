@@ -15,7 +15,7 @@
     internal RenderScript render;
 
     internal static bool anotherQuaverReady;
-    internal bool solved, lights, gameplay, ready, canAdjustScroll;
+    internal bool solved, gameplay, ready, canAdjustScroll;
     internal static int moduleIdCounter;
     internal int moduleId;
 

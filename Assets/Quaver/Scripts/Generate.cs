@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Rnd = UnityEngine.Random;
 
 internal class Generate
 {
@@ -21,7 +24,7 @@ internal class Generate
         new string[] { "21112111", "31112111", "21113111", "31113111", "21212111", "21112121", "31212111", "31112121", "21312111", "21112131", "21213111", "21113121", "31312111", "31112131", "31213111", "31113121", "21313111", "21113131", "31313111", "31113131", "31212121", "21312121", "21213121", "21212131", "31312121", "31213121", "31212131", "21313121", "21312131", "21213131", "31313121", "31312131", "31213131", "21313131", /*"21212122", "21312122", "21213122", "21313122",*/ "21212221", "31212221", "31312221", "21312221", "21222121", "31222121", "21222131", "31222131", "22212121", "22213121", "22212131", "22213131", "21222221", "31222221", "22222121", "22222131", "22222221", /*"22222222",*/ "11111111" }
     };
 
-    internal void Validate()
+    internal bool Validate()
     {
         bool isCorrect = true;
 
@@ -38,13 +41,28 @@ internal class Generate
         else
             isCorrect = int.Parse(quaver.ReceptorTotalText.text) == ArrowScript.arrowsPerColumn.Sum();
 
+        return isCorrect;
+    }
+
+    internal void OnSubmit(bool isCorrect)
+    {
         if (isCorrect)
         {
             CalculateRating();
+            Debug.LogFormat("[Quaver #{0}]: The submission was correct, the bar is now {1}% filled.", quaver.init.moduleId, Math.Ceiling(quaver.Render.ratingProgress * 100));
         }
 
         else
         {
+            List<string> inputs = new List<string>();
+
+            if (quaver.init.select.perColumn)
+                for (int i = 0; i < length; i++)
+                    inputs.Add(quaver.ReceptorTexts[i].text);
+            else
+                inputs.Add(quaver.ReceptorTotalText.text);
+
+            Debug.LogFormat("[Quaver #{0}]: The submission ({1}) was incorrect, strike!", quaver.init.moduleId, inputs.Join(", "));
             quaver.Audio.PlaySoundAtTransform("strike", quaver.transform);
             quaver.Module.HandleStrike();
         }
@@ -72,6 +90,7 @@ internal class Generate
 
         if (quaver.Render.ratingProgress >= 1)
         {
+            Debug.LogFormat("[Quaver #{0}]: The bar is filled, that's a solve!", quaver.init.moduleId);
             quaver.Module.HandlePass();
             quaver.init.solved = true;
         }
@@ -79,6 +98,7 @@ internal class Generate
 
     internal IEnumerator Play(RenderScript render)
     {
+        Debug.LogFormat("[Quaver #{0}]: Difficulty settings are [{1}, {2}, {3}].", quaver.init.moduleId, quaver.init.select.speed > 9 ? "2.0" : "1." + quaver.init.select.speed, new[] { "Normal", "Hard", "Insane", "Expert" }[quaver.init.select.difficulty], quaver.init.select.perColumn);
         quaver.Audio.PlaySoundAtTransform("start", quaver.transform);
 
         int difficulty = quaver.init.select.difficulty;
@@ -102,7 +122,7 @@ internal class Generate
 
             render.songProgress = (float)i / sequence.Length;
 
-            yield return new WaitForSeconds(1 / (float)(GetSpeed(speed, difficulty == 3) * amplifier));
+            yield return new WaitForSeconds(1 / (GetSpeed(speed, difficulty == 3) * amplifier));
         }
 
         render.songProgress = 1;
@@ -113,7 +133,10 @@ internal class Generate
         else
             quaver.Render.UpdateReceptorTotalText(0);
 
+        yield return new WaitForSeconds(1);
+
         quaver.init.ready = true;
+        Debug.LogFormat("[Quaver #{0}]: The current solution is {1}.", quaver.init.moduleId, quaver.init.select.perColumn ? ArrowScript.arrowsPerColumn.Join(", ") : ArrowScript.arrowsPerColumn.Sum().ToString());
     }
 
     internal string Pattern()
@@ -123,7 +146,7 @@ internal class Generate
 
         for (int i = 0; i < sequences.Length; i++)
             for (int j = 0; j < length; j++)
-                sequences[i] += patterns[difficulty][Random.Range(0, patterns[difficulty].Length)];
+                sequences[i] += patterns[difficulty][Rnd.Range(0, patterns[difficulty].Length)];
 
         string finalSequence = string.Empty;
 
@@ -135,8 +158,7 @@ internal class Generate
 
             finalSequence += sum.ToString();
         }
-
-        Debug.Log(finalSequence);
+        
         return finalSequence;
     }
 

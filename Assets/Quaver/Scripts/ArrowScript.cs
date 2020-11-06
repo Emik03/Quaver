@@ -26,7 +26,7 @@ public class ArrowScript : MonoBehaviour
 	private byte alpha;
 	private int position;
 	private static bool playSound;
-	private static float speed = 0.15f;
+	private const float speed = 0.15f;
 	private static readonly int[] rotations = { 270, 180, 0, 90 };
 
 	private void Start() 
@@ -35,7 +35,6 @@ public class ArrowScript : MonoBehaviour
 			return;
 
 		isClone = true;
-		bool isExpert = name.Length == 3;
 
 		int index = Alter.CharToInt(name.Last());
 		ArrowRenderer.material.mainTexture = ArrowTextures[index];

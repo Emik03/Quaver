@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class RenderScript : MonoBehaviour
@@ -7,11 +8,11 @@ public class RenderScript : MonoBehaviour
     public Renderer Cover;
     public TextMesh SpeedText, GameplayDifficulty, GameplayMods, GameplayScroll;
     public Texture[] DifficultyTextures, PerColumnTextures;
-    public Transform Gameplay, Selection, Speed, Timer, SongProgress, RatingProgress;
+    public Transform Gameplay, Selection, Speed, Timer, SongProgress, RatingProgress, UISelect;
     public QuaverScript Quaver;
 
     internal int timer, scrollSpeed;
-    internal float songProgress, ratingProgress;
+    internal float songProgress, ratingProgress, uiSelectPositionOffset;
 
     private byte alpha;
     private const int easeIntensity = 8;
@@ -29,6 +30,10 @@ public class RenderScript : MonoBehaviour
 
         SongProgress.localScale = new Vector3(SongProgress.localScale.x + (songProgress - SongProgress.localScale.x) / (float)Math.Pow(easeIntensity, 2), 1, 1);
         RatingProgress.localScale = new Vector3(RatingProgress.localScale.x + (Math.Min(ratingProgress, 1) - RatingProgress.localScale.x) / (float)Math.Pow(easeIntensity, 2), 1, 1);
+        
+        destination = (-3.35f * Quaver.init.select.ui) + 2.5f;
+        position = UISelect.localPosition.z + ((destination - UISelect.localPosition.z) / easeIntensity);
+        UISelect.localPosition = new Vector3(-4.35f, 0.0002f, position + ((float)Math.Sin(uiSelectPositionOffset += 0.05f) / 20));
 
         if (alpha > 0)
             alpha--;
@@ -43,8 +48,6 @@ public class RenderScript : MonoBehaviour
                 Quaver.init.gameplay = false;
                 Init.anotherQuaverReady = false;
                 Quaver.init.ready = false;
-
-                Quaver.init.generate.Validate();
 
                 StartCoroutine(Transition());
             }
@@ -83,11 +86,48 @@ public class RenderScript : MonoBehaviour
 
     internal IEnumerator Transition()
     {
+        bool b = Quaver.init.gameplay;
+
+        if (!b)
+        {
+            bool isCorrect = Quaver.init.generate.Validate();
+            Quaver.Audio.PlaySoundAtTransform("submit" + isCorrect, transform);
+
+            if (!isCorrect)
+            {
+                if (Quaver.init.select.perColumn)
+                    for (int j = 0; j < Quaver.ReceptorTexts.Length; j++)
+                        Quaver.ReceptorTexts[j].text = (int.Parse(Quaver.ReceptorTexts[j].text) - ArrowScript.arrowsPerColumn[j]).ToString();
+
+                else
+                    Quaver.ReceptorTotalText.text = (int.Parse(Quaver.ReceptorTotalText.text) - ArrowScript.arrowsPerColumn.Sum()).ToString();
+            }
+
+            for (byte i = 255; i > 0; i -= 15)
+            {
+                for (int j = 0; j < Quaver.ReceptorTexts.Length; j++)
+                {
+                    bool isCorrectOnColumn = Quaver.ReceptorTexts[j].text == ArrowScript.arrowsPerColumn[j].ToString();
+                    Quaver.ReceptorTexts[j].color = new Color32(isCorrectOnColumn ? i : (byte)255, isCorrectOnColumn ? (byte)255 : i, isCorrectOnColumn ? (byte)255 : i, 255);
+                }
+
+                Quaver.ReceptorTotalText.color = new Color32(isCorrect ? i : (byte)255, isCorrect ? (byte)255 : i, isCorrect ? (byte)255 : i, 255);
+
+                yield return new WaitForFixedUpdate();
+            }
+
+            yield return new WaitForSeconds(0.5f);
+
+            for (int j = 0; j < Quaver.ReceptorTexts.Length; j++)
+                Quaver.ReceptorTexts[j].color = new Color32(255, 255, 255, 255);
+
+            Quaver.init.generate.OnSubmit(isCorrect);
+        }
+
         Quaver.init.canAdjustScroll = true;
 
         alpha = 255;
         songProgress = 0;
-        bool b = Quaver.init.gameplay;
 
         if (b)
         {
