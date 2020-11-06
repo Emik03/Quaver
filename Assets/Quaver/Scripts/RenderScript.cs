@@ -54,7 +54,7 @@ public class RenderScript : MonoBehaviour
     internal void UpdateReceptorTotalText(int temp = -1)
     {
         if (temp == -1)
-            temp = Math.Min((int.Parse(Quaver.ReceptorTotalText.text) + 1) % (Quaver.init.select.difficulty == 3 ? 400 : 200), 100);
+            temp = (int.Parse(Quaver.ReceptorTotalText.text) + 1) % (Quaver.init.select.difficulty == 3 ? 320 : 200);
 
         Quaver.ReceptorTotalText.text = temp.ToString();
         Quaver.ReceptorTotalText.fontSize = (temp * 3) + 200;

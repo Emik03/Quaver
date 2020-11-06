@@ -91,7 +91,6 @@ public class ArrowScript : MonoBehaviour
 		yield return new WaitForSeconds(0.1f);
 		Receptors[position].material.mainTexture = ReceptorTextures[0];
 
-		Debug.Log(arrowsPerColumn.Join(", "));
 		Destroy(Arrow);
 	}
 }

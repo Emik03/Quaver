@@ -102,7 +102,7 @@ internal class Generate
 
             render.songProgress = (float)i / sequence.Length;
 
-            yield return new WaitForSeconds(1 / (GetSpeed(speed, difficulty == 3) * amplifier));
+            yield return new WaitForSeconds(1 / (float)(GetSpeed(speed, difficulty == 3) * amplifier));
         }
 
         render.songProgress = 1;
@@ -149,6 +149,6 @@ internal class Generate
 
     private float GetSpeed(int speed, bool expert = false)
     {
-        return (speed / (expert ? 5 : 10)) + 1;
+        return ((float)speed / (expert ? 5 : 10)) + 1;
     }
 }
