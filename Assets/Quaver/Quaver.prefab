@@ -818,6 +818,7 @@ GameObject:
   - component: {fileID: 114909139518382264}
   - component: {fileID: 114471981019461520}
   - component: {fileID: 114135762698809422}
+  - component: {fileID: 114524778364599294}
   - component: {fileID: 114005986800692134}
   m_Layer: 0
   m_Name: Quaver
@@ -4027,6 +4028,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Mobile/Diffuse
+--- !u!114 &114524778364599294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1864287731222580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068fec64d421ef14bb1c5b6f93dcbde0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Quaver: {fileID: 114005986800692134}
 --- !u!114 &114527732502930450
 MonoBehaviour:
   m_ObjectHideFlags: 1

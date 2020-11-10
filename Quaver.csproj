@@ -254,6 +254,7 @@
     <Compile Include="Assets\Quaver\Scripts\QuaverScript.cs" />
     <Compile Include="Assets\Quaver\Scripts\RenderScript.cs" />
     <Compile Include="Assets\Quaver\Scripts\Select.cs" />
+    <Compile Include="Assets\Quaver\Scripts\TPScript.cs" />
     <Compile Include="Assets\Quaver\Scripts\Unity.cs" />
     <Compile Include="Assets\Scripts\Easing.cs" />
     <Compile Include="Assets\Scripts\GeneralExtensions.cs" />
