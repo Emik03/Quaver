@@ -49,7 +49,7 @@ internal class Generate
         if (isCorrect)
         {
             CalculateRating();
-            Debug.LogFormat("[Quaver #{0}]: The submission was correct, the bar is now {1}% filled.", quaver.init.moduleId, Math.Ceiling(quaver.Render.ratingProgress * 100));
+            Debug.LogFormat("[Quaver #{0}]: The submission was correct, the bar is now {1}% filled.", quaver.init.moduleId, Math.Floor(quaver.Render.ratingProgress * 100));
         }
 
         else
@@ -57,7 +57,7 @@ internal class Generate
             List<string> inputs = new List<string>();
 
             if (quaver.init.select.perColumn)
-                for (int i = 0; i < length; i++)
+                for (int i = 0; i < quaver.ReceptorTexts.Length; i++)
                     inputs.Add(quaver.ReceptorTexts[i].text);
             else
                 inputs.Add(quaver.ReceptorTotalText.text);
@@ -90,7 +90,7 @@ internal class Generate
 
         if (quaver.Render.ratingProgress >= 1)
         {
-            Debug.LogFormat("[Quaver #{0}]: The bar is filled, that's a solve!", quaver.init.moduleId);
+            quaver.Audio.PlaySoundAtTransform("solve", quaver.transform);
             quaver.Module.HandlePass();
             quaver.init.solved = true;
         }

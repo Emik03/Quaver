@@ -41,7 +41,7 @@ public class RenderScript : MonoBehaviour
         if (timer > 0)
         {
             timer--;
-            Timer.localScale = new Vector3((float)timer / 50 * 0.99f, 0.1f, 0.03f);
+            Timer.localScale = new Vector3((float)timer / 100 * 0.99f, 0.1f, 0.03f);
 
             if (timer == 0)
             {
@@ -57,7 +57,9 @@ public class RenderScript : MonoBehaviour
     internal void UpdateReceptorTotalText(int temp = -1)
     {
         if (temp == -1)
-            temp = (int.Parse(Quaver.ReceptorTotalText.text) + 1) % (Quaver.init.select.difficulty == 3 ? 320 : 200);
+            temp = (int.Parse(Quaver.ReceptorTotalText.text) + 1) % (Quaver.init.select.difficulty == 3
+                                                                  ? Quaver.init.select.perColumn ? 80 : 320
+                                                                  : 200);
 
         Quaver.ReceptorTotalText.text = temp.ToString();
         Quaver.ReceptorTotalText.fontSize = (temp * 3) + 200;
@@ -162,9 +164,9 @@ public class RenderScript : MonoBehaviour
 
             for (byte i = 255; i > 0; i -= 5)
             {
-                GameplayDifficulty.color = new Color32(254, 254, 254, i);
-                GameplayMods.color = new Color32(254, 254, 254, i);
-                GameplayScroll.color = new Color32(254, 254, 254, i);
+                GameplayDifficulty.color = new Color32(i, i, i, i);
+                GameplayMods.color = new Color32(i, i, i, i);
+                GameplayScroll.color = new Color32(i, i, i, i);
                 yield return new WaitForFixedUpdate();
             }
 

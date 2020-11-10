@@ -17,7 +17,7 @@ internal class Select
         return delegate ()
         {
             quaver.Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, quaver.Buttons[btn].transform);
-            quaver.Buttons[btn].AddInteractionPunch();
+            quaver.Buttons[btn].AddInteractionPunch(0.1f);
 
             if (!quaver.init.gameplay)
                 PressSelection(ref btn);
@@ -35,11 +35,15 @@ internal class Select
             return;
 
         if (quaver.init.select.perColumn)
-            quaver.ReceptorTexts[btn].text = ((int.Parse(quaver.ReceptorTexts[btn].text) + 1) % (quaver.init.select.difficulty == 3 ? 200 : 50)).ToString();
+            if (btn == 4)
+                for (int i = 0; i < quaver.ReceptorTexts.Length; i++)
+                    quaver.ReceptorTexts[i].text = ((int.Parse(quaver.ReceptorTexts[i].text) + 1) % (quaver.init.select.difficulty == 3 ? 200 : 50)).ToString();
+            else
+                quaver.ReceptorTexts[btn].text = ((int.Parse(quaver.ReceptorTexts[btn].text) + 1) % (quaver.init.select.difficulty == 3 ? 200 : 50)).ToString();
         else
             quaver.Render.UpdateReceptorTotalText();
 
-        quaver.Render.timer = 50;
+        quaver.Render.timer = 100;
     }
 
     private void PressPreGameplay(ref int btn)
@@ -48,6 +52,7 @@ internal class Select
         {
             case 1: ArrowScript.scrollSpeed = Math.Max(--ArrowScript.scrollSpeed, 10); quaver.Audio.PlaySoundAtTransform("lower", quaver.transform); break;
             case 2: ArrowScript.scrollSpeed = Math.Min(++ArrowScript.scrollSpeed, 30); quaver.Audio.PlaySoundAtTransform("higher", quaver.transform); break;
+            case 4: ArrowScript.scrollSpeed = 10; quaver.Audio.PlaySoundAtTransform("submitTrue", quaver.transform); break;
         }
 
         quaver.Render.GameplayScroll.text = "Scroll Speed: " + ArrowScript.scrollSpeed;
@@ -67,9 +72,9 @@ internal class Select
                 quaver.Audio.PlaySoundAtTransform("lower", quaver.transform);
                 break;
 
-            case 1: ui++; quaver.Audio.PlaySoundAtTransform("select", quaver.transform); break;
+            case 1: ui = ++ui % 3; quaver.Audio.PlaySoundAtTransform("select", quaver.transform); break;
 
-            case 2: ui = Math.Max(--ui, 0); quaver.Audio.PlaySoundAtTransform("select", quaver.transform); break;
+            case 2: ui = (--ui + 3) % 3; quaver.Audio.PlaySoundAtTransform("select", quaver.transform); break;
 
             case 3:
                 switch (ui)
@@ -80,17 +85,19 @@ internal class Select
                 }
                 quaver.Audio.PlaySoundAtTransform("higher", quaver.transform);
                 break;
-        }
 
-        if (ui > 2)
-        {
-            ui = Init.anotherQuaverReady ? 2 : 0;
+            case 4:
+                bool shouldStart = !Init.anotherQuaverReady && !quaver.init.solved;
 
-            if (!Init.anotherQuaverReady && !quaver.init.solved)
-            {
-                quaver.init.gameplay = true;
-                Init.anotherQuaverReady = true;
-            }
+                ui = shouldStart ? 2 : 0;
+
+                if (shouldStart)
+                {
+                    quaver.init.gameplay = true;
+                    Init.anotherQuaverReady = true;
+                }
+                break;
+
         }
 
         quaver.init.render.UpdateSelection();
