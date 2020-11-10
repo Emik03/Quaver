@@ -8,6 +8,8 @@ public class TPScript : MonoBehaviour
 {
 	public QuaverScript Quaver;
 
+    private const string Help = "";
+
     private bool IsSubmitValid(string[] split)
     {
         ushort j, max = Quaver.init.select.difficulty == 3 ? Quaver.init.select.perColumn ? (ushort)80 : (ushort)320 : (ushort)200;
@@ -54,27 +56,7 @@ public class TPScript : MonoBehaviour
                 yield return "sendtochaterror At least one value is invalid!";
 
             else
-            {
-                int offset = 0;
-
-                if (Quaver.init.select.perColumn)
-                    for (int i = 0; i < new[] { int.Parse(split[1]), int.Parse(split[2]), int.Parse(split[3]), int.Parse(split[4]) }.Min(); i++)
-                    {
-                        Quaver.Buttons[4].OnInteract();
-                        offset++;
-                        yield return new WaitForSeconds(0.05f);
-                    }
-
-                for (int i = 1; i < split.Length; i++)
-                {
-                    int value = int.Parse(split[i]);
-                    for (int j = 0; j < value - offset; j++)
-                    {
-                        Quaver.Buttons[i - 1].OnInteract();
-                        yield return new WaitForSeconds(0.05f);
-                    }
-                }
-            }
+                yield return Input(split);
         }
 
         else if (Regex.IsMatch(split[0], @"^\s*start\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
@@ -146,5 +128,45 @@ public class TPScript : MonoBehaviour
     private IEnumerator TwitchHandleForcedSolve()
     {
         yield return null;
+
+        Quaver.init.select.speed = 10;
+        Quaver.init.select.difficulty = 3;
+        Quaver.init.select.perColumn = true;
+
+        if (!Quaver.init.gameplay)
+            Quaver.Buttons[4].OnInteract();
+
+        while (!Quaver.init.ready)
+            yield return true;
+
+        yield return new WaitForSeconds(1);
+
+        string[] correct = new string[5];
+        Array.Copy(ArrowScript.arrowsPerColumn.Select(x => x.ToString()).ToArray(), 0, correct, 1, 4);
+
+        yield return Input(correct);
+    }
+
+    private IEnumerator Input(string[] array)
+    {
+        int offset = 0;
+
+        if (Quaver.init.select.perColumn)
+            for (int i = 0; i < new[] { int.Parse(array[1]), int.Parse(array[2]), int.Parse(array[3]), int.Parse(array[4]) }.Min(); i++)
+            {
+                Quaver.Buttons[4].OnInteract();
+                offset++;
+                yield return new WaitForSeconds(0.05f);
+            }
+
+        for (int i = 1; i < array.Length; i++)
+        {
+            int value = int.Parse(array[i]);
+            for (int j = 0; j < value - offset; j++)
+            {
+                Quaver.Buttons[i - 1].OnInteract();
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
     }
 }
