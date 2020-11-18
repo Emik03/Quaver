@@ -60,8 +60,8 @@
      <Compile Include="Assets\Examples\1.5 WebService\ExampleWebService.cs" />
      <Compile Include="Assets\Examples\1.8 Button Masher Module\ButtonMasherModule.cs" />
      <Compile Include="Assets\Examples\1.9 Widget\ExampleWidget.cs" />
-     <Compile Include="Assets\Quaver\Scripts\Alter.cs" />
      <Compile Include="Assets\Quaver\Scripts\ArrowScript.cs" />
+     <Compile Include="Assets\Quaver\Scripts\Convert.cs" />
      <Compile Include="Assets\Quaver\Scripts\Generate.cs" />
      <Compile Include="Assets\Quaver\Scripts\Init.cs" />
      <Compile Include="Assets\Quaver\Scripts\QuaverScript.cs" />
@@ -96,13 +96,11 @@
      <Compile Include="Assets\TestHarness\Widgets\SerialNumber.cs" />
      <Compile Include="Assets\TestHarness\Widgets\TwoFactorWidget.cs" />
      <Compile Include="Assets\TestHarness\Widgets\Widget.cs" />
-     <None Include="Assets\Quaver\Shaders\KT_Mobile-Diffuse-tint-transparent.shader" />
      <None Include="Assets\Examples\Assets\Shaders\KT_3D_Text-Diffuse.shader" />
      <None Include="Assets\Examples\Assets\Shaders\BlendTwoTexturesUnlit.shader" />
      <None Include="Assets\Examples\Assets\Shaders\BlendTwoTexturesLitAndUnlitVertexColor.shader" />
      <None Include="Assets\Examples\Assets\Shaders\KT_Mobile-Diffuse.shader" />
      <None Include="Assets\Examples\Assets\Shaders\KT_3D_Text.shader" />
-     <None Include="Assets\Quaver\Shaders\KT_3D_Text_Layered.shader" />
      <None Include="Assets\TestHarness\Shaders\Outline.shader" />
      <None Include="Assets\Examples\Assets\Shaders\MobileTransparentDiffuseUnderlay.shader" />
      <None Include="Assets\TestHarness\_THIS_FOLDER_IS_EXCLUDED_FROM_BUNDLES.txt" />

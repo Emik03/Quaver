@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class RenderScript : MonoBehaviour
 {
-    public Renderer Cover;
+    public Renderer Cover, JudgementRenderer;
     public TextMesh SpeedText, GameplayDifficulty, GameplayMods, GameplayScroll;
     public Texture[] DifficultyTextures, PerColumnTextures;
-    public Transform Gameplay, Selection, Speed, Timer, SongProgress, RatingProgress, UISelect;
+    public Transform Gameplay, Selection, Speed, Timer, SongProgress, RatingProgress, UISelect, Judgement;
     public QuaverScript Quaver;
 
     internal int timer, scrollSpeed;
     internal float songProgress, ratingProgress, uiSelectPositionOffset;
+    internal static float judgement;
 
     private byte alpha;
     private const int easeIntensity = 8;
@@ -34,6 +35,13 @@ public class RenderScript : MonoBehaviour
         destination = (-3.35f * Quaver.init.select.ui) + 2.5f;
         position = UISelect.localPosition.z + ((destination - UISelect.localPosition.z) / easeIntensity);
         UISelect.localPosition = new Vector3(-4.35f, 0.0002f, position + ((float)Math.Sin(uiSelectPositionOffset += 0.05f) / 20));
+
+        if (Quaver.init.moduleId == Init.moduleIdCounter)
+        {
+            judgement = Math.Max(judgement - 0.2f, 0);
+            Judgement.localPosition = new Vector3(0, 0.0002f, -judgement / 3);
+            JudgementRenderer.material.color = new Color32(255, 255, 255, (byte)(Math.Sqrt(judgement) * 255));
+        }
 
         if (alpha > 0)
             alpha--;
@@ -63,7 +71,7 @@ public class RenderScript : MonoBehaviour
 
         Quaver.ReceptorTotalText.text = temp.ToString();
         Quaver.ReceptorTotalText.fontSize = (temp * 3) + 200;
-        Quaver.ReceptorTotalText.color = new Color32(255, (byte)(255 - (temp * 2)), (byte)(255 - (temp * 2)), 255);
+        Quaver.ReceptorTotalText.color = new Color32(255, (byte)Math.Max(255 - (temp * 2), 0), (byte)Math.Max(255 - (temp * 2), 0), 255);
     }
 
     internal void CreateArrow(int i, int j)
@@ -118,7 +126,7 @@ public class RenderScript : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             for (int j = 0; j < Quaver.ReceptorTexts.Length; j++)
                 Quaver.ReceptorTexts[j].color = new Color32(255, 255, 255, 255);

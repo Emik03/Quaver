@@ -77,12 +77,12 @@ public class TPScript : MonoBehaviour
             else
             {
                 Quaver.Buttons[4].OnInteract();
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSecondsRealtime(1);
 
                 while (scrollSpeed != 0 && scrollSpeed != ArrowScript.scrollSpeed)
                 {
                     Quaver.Buttons[scrollSpeed < ArrowScript.scrollSpeed ? 1 : 2].OnInteract();
-                    yield return new WaitForSeconds(0.05f);
+                    yield return new WaitForSecondsRealtime(0.05f);
                 }
             }
         }
@@ -107,7 +107,7 @@ public class TPScript : MonoBehaviour
                 while (Quaver.init.select.ui != 0)
                 {
                     Quaver.Buttons[1].OnInteract();
-                    yield return new WaitForSeconds(0.05f);
+                    yield return new WaitForSecondsRealtime(0.05f);
                 }
 
                 for (int i = 0; i < parameters.Length; i++)
@@ -115,11 +115,11 @@ public class TPScript : MonoBehaviour
                     while (parameters[i] != new[] { Quaver.init.select.speed, Quaver.init.select.difficulty, Convert.ToByte(Quaver.init.select.perColumn) }[i])
                     {
                         Quaver.Buttons[3].OnInteract();
-                        yield return new WaitForSeconds(0.05f);
+                        yield return new WaitForSecondsRealtime(0.05f);
                     }
 
                     Quaver.Buttons[1].OnInteract();
-                    yield return new WaitForSeconds(0.05f);
+                    yield return new WaitForSecondsRealtime(0.05f);
                 }
             }
         }
@@ -139,7 +139,7 @@ public class TPScript : MonoBehaviour
         while (!Quaver.init.ready)
             yield return true;
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSecondsRealtime(1);
 
         string[] correct = new string[5];
         Array.Copy(ArrowScript.arrowsPerColumn.Select(x => x.ToString()).ToArray(), 0, correct, 1, 4);
@@ -156,7 +156,7 @@ public class TPScript : MonoBehaviour
             {
                 Quaver.Buttons[4].OnInteract();
                 offset++;
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSecondsRealtime(0.05f);
             }
 
         for (int i = 1; i < array.Length; i++)
@@ -165,7 +165,7 @@ public class TPScript : MonoBehaviour
             for (int j = 0; j < value - offset; j++)
             {
                 Quaver.Buttons[i - 1].OnInteract();
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSecondsRealtime(0.05f);
             }
         }
     }

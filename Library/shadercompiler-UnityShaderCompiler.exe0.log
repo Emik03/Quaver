@@ -1,6 +1,2 @@
 Base path: C:/Program Files/Editor/Data
 Cmd: initializeCompiler
-Cmd: preprocess
-  insize=1142 outsize=478 ok=1
-Cmd: preprocess
-  insize=877 outsize=1099 ok=1

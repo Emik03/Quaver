@@ -1,7 +1,10 @@
-﻿internal class Init
+﻿using System.Collections.Generic;
+
+internal class Init
 {
     internal Init(QuaverScript quaver)
     {
+        correctValues = new List<int[]>();
         this.quaver = quaver;
 
         generate = new Generate(quaver);
@@ -18,6 +21,7 @@
     internal bool solved, gameplay, ready, canAdjustScroll;
     internal static int moduleIdCounter;
     internal int moduleId;
+    internal List<int[]> correctValues;
 
     internal void OnActivate()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using UnityEngine;
+using QE = QuaverExtension.Convert;
 
 public class ArrowScript : MonoBehaviour 
 {
@@ -26,7 +27,7 @@ public class ArrowScript : MonoBehaviour
 	private byte alpha;
 	private int position;
 	private static bool playSound;
-	private const float speed = 0.15f;
+	private const float speedZ = 0.15f, deleteZ = -2.1f;
 	private static readonly int[] rotations = { 270, 180, 0, 90 };
 
 	private void Start() 
@@ -36,12 +37,12 @@ public class ArrowScript : MonoBehaviour
 
 		isClone = true;
 
-		int index = Alter.CharToInt(name.Last());
+		int index = QE.CharToInt(name.Last());
 		ArrowRenderer.material.mainTexture = ArrowTextures[index];
 
         do position = Random.Range(0, positionsUsed.Length);
         while (positionsUsed[position] != positionsUsed.Max());
-
+		
 		positionsUsed[position] = 0;
 
 		Arrow.transform.localPosition = spawnPositions[position];
@@ -64,9 +65,9 @@ public class ArrowScript : MonoBehaviour
         ArrowRenderer.material.color = new Color32(255, 255, 255, alpha);
 
 		var pos = Arrow.transform.localPosition;
-		Arrow.transform.localPosition = new Vector3(pos.x, pos.y, pos.z - (speed * scrollSpeed / 10));
+		Arrow.transform.localPosition = new Vector3(pos.x, pos.y, pos.z - (speedZ * scrollSpeed / 10));
 
-		if (pos.z <= -2.3f)
+		if (pos.z <= deleteZ)
 		{
 			if (playSound)
             {
@@ -87,9 +88,10 @@ public class ArrowScript : MonoBehaviour
         ArrowRenderer.material = null;
 
         Receptors[position].material.mainTexture = ReceptorTextures[1];
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSecondsRealtime(0.1f);
 		Receptors[position].material.mainTexture = ReceptorTextures[0];
 
+		RenderScript.judgement = 1;
 		Destroy(Arrow);
 	}
 }

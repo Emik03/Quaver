@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using QE = QuaverExtension.Convert;
 using Rnd = UnityEngine.Random;
 
 internal class Generate
@@ -48,7 +49,7 @@ internal class Generate
     {
         if (isCorrect)
         {
-            CalculateRating();
+            RewardCalculatedRating();
             Debug.LogFormat("[Quaver #{0}]: The submission was correct, the bar is now {1}% filled.", quaver.init.moduleId, Math.Floor(quaver.Render.ratingProgress * 100));
         }
 
@@ -76,11 +77,14 @@ internal class Generate
         quaver.ReceptorTotalText.text = string.Empty;
     }
 
-    private void CalculateRating()
+    private void RewardCalculatedRating()
     {
         quaver.Audio.PlaySoundAtTransform("note4", quaver.transform);
 
-        float award = (quaver.init.select.difficulty + 0.25f) / 6 * (((float)quaver.init.select.speed / 10) + 1);
+        quaver.init.correctValues.Add(quaver.init.select.perColumn ? ArrowScript.arrowsPerColumn : new[] { ArrowScript.arrowsPerColumn.Sum() });
+        float[] difficultyValues = { 0.1f, 0.2f, 0.4f, 0 };
+
+        float award = difficultyValues[quaver.init.select.difficulty] * (((float)quaver.init.select.speed / 10) + 1);
         if (!quaver.init.select.perColumn)
             award /= 2;
         if (quaver.init.select.difficulty == 3)
@@ -93,6 +97,10 @@ internal class Generate
             quaver.Audio.PlaySoundAtTransform("solve", quaver.transform);
             quaver.Module.HandlePass();
             quaver.init.solved = true;
+            foreach (var item in quaver.init.correctValues)
+            {
+                Debug.Log(item.Join(", "));
+            }
         }
     }
 
@@ -114,15 +122,15 @@ internal class Generate
 
         for (int i = 0; i < sequence.Length; i++)
         {
-            if (Alter.CharToInt(sequence[i]) == 0)
+            if (QE.CharToInt(sequence[i]) == 0)
                 ArrowScript.positionsUsed = new int[4];
 
-            for (int j = 0; j < Alter.CharToInt(sequence[i]); j++)
-                render.CreateArrow(Alter.CharToInt(sequence[i]), IndexToColor(i));
+            for (int j = 0; j < QE.CharToInt(sequence[i]); j++)
+                render.CreateArrow(QE.CharToInt(sequence[i]), IndexToColor(i));
 
             render.songProgress = (float)i / sequence.Length;
 
-            yield return new WaitForSeconds(1 / (GetSpeed(speed, difficulty == 3) * amplifier));
+            yield return new WaitForSecondsRealtime(1 / (GetSpeed(speed, difficulty == 3) * amplifier));
         }
 
         render.songProgress = 1;
@@ -133,7 +141,7 @@ internal class Generate
         else
             quaver.Render.UpdateReceptorTotalText(0);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSecondsRealtime(1);
 
         quaver.init.ready = true;
         Debug.LogFormat("[Quaver #{0}]: The current solution is {1}.", quaver.init.moduleId, quaver.init.select.perColumn ? ArrowScript.arrowsPerColumn.Join(", ") : ArrowScript.arrowsPerColumn.Sum().ToString());
@@ -154,7 +162,7 @@ internal class Generate
         {
             int sum = 0;
             for (int j = 0; j < sequences.Length; j++)
-                sum += Alter.CharToInt(sequences[j][i]);
+                sum += QE.CharToInt(sequences[j][i]);
 
             finalSequence += sum.ToString();
         }
