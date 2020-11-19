@@ -8,11 +8,13 @@ public class TPScript : MonoBehaviour
 {
 	public QuaverScript Quaver;
 
-    private const string Help = "";
+#pragma warning disable 414
+    private const string TwitchHelpMessage = @"!{0} set <speed> <difficulty> <per column> | !{0} start <#> (Number not required, adjusts scroll speed) | !{0} submit <#> <#> <#> <#>";
+#pragma warning restore 414
 
     private bool IsSubmitValid(string[] split)
     {
-        ushort j, max = Quaver.init.select.difficulty == 3 ? Quaver.init.select.perColumn ? (ushort)80 : (ushort)320 : (ushort)200;
+        ushort j, max = Quaver.init.select.difficulty == 3 ? Quaver.init.select.perColumn ? (ushort)100 : (ushort)500 : (ushort)250;
         for (int i = 1; i < split.Length; i++)
             if (!ushort.TryParse(split[i], out j) || j >= max)
                 return false;

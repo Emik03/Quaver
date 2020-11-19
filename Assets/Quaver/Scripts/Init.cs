@@ -25,6 +25,7 @@ internal class Init
 
     internal void OnActivate()
     {
+        anotherQuaverReady = false; // Resets it if the bomb was quit out while the module was in submission.
         render.UpdateSelection();
         moduleId = ++moduleIdCounter;
 

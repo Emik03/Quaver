@@ -60,7 +60,7 @@ public class ArrowScript : MonoBehaviour
 		}
 
 		if (alpha != 255)
-            alpha += 51;
+            alpha += 85;
 
         ArrowRenderer.material.color = new Color32(255, 255, 255, alpha);
 

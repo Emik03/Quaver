@@ -66,8 +66,8 @@ public class RenderScript : MonoBehaviour
     {
         if (temp == -1)
             temp = (int.Parse(Quaver.ReceptorTotalText.text) + 1) % (Quaver.init.select.difficulty == 3
-                                                                  ? Quaver.init.select.perColumn ? 80 : 320
-                                                                  : 200);
+                                                                  ? Quaver.init.select.perColumn ? 100 : 400
+                                                                  : 250);
 
         Quaver.ReceptorTotalText.text = temp.ToString();
         Quaver.ReceptorTotalText.fontSize = (temp * 3) + 200;
