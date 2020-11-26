@@ -63,7 +63,7 @@ internal class Generate
             else
                 inputs.Add(quaver.ReceptorTotalText.text);
 
-            Debug.LogFormat("[Quaver #{0}]: The submission ({1}) was incorrect, strike!", quaver.init.moduleId, inputs.Join(", "));
+            Debug.LogFormat("[Quaver #{0}]: The submission was off by [{1}], strike!", quaver.init.moduleId, inputs.Join(", "));
             quaver.Audio.PlaySoundAtTransform("strike", quaver.transform);
             quaver.Module.HandleStrike();
         }

@@ -70,11 +70,14 @@ public class TPScript : MonoBehaviour
             if (Quaver.init.gameplay)
                 yield return "sendtochaterror This command cannot run during gameplay!";
 
+            else if (Init.anotherQuaverReady)
+                yield return "sendtochaterror You cannot start another instance of Quaver, please exit out of gameplay from the other one first!";
+
             else if (split.Length > 2)
                 yield return "sendtochaterror Too many parameters!";
 
             else if (split.Length == 2 && !int.TryParse(split[1], out scrollSpeed) && (scrollSpeed == 0 || (scrollSpeed >= 10 && scrollSpeed <= 30)))
-                yield return "sendtochaterror Parameter specified is invalid!";
+                yield return "sendtochaterror Parameter specified is invalid! Scroll speed's range is 10-30.";
 
             else
             {
