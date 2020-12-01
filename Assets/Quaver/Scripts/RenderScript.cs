@@ -15,6 +15,7 @@ public class RenderScript : MonoBehaviour
     internal float songProgress, ratingProgress, uiSelectPositionOffset;
     internal static float judgement;
 
+    private bool transition;
     private byte alpha;
     private const int easeIntensity = 8;
     private const float speedEdges = 3f;
@@ -96,6 +97,8 @@ public class RenderScript : MonoBehaviour
 
     internal IEnumerator Transition()
     {
+        yield return new WaitWhile(() => transition);
+        transition = true;
         bool b = Quaver.init.gameplay;
 
         if (!b)
@@ -161,6 +164,7 @@ public class RenderScript : MonoBehaviour
 
         Gameplay.localPosition = b ? show : hide;
         Selection.localPosition = b ? hide : show;
+        transition = false;
 
         if (b)
         {

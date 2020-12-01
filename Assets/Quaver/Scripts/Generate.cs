@@ -97,10 +97,6 @@ internal class Generate
             quaver.Audio.PlaySoundAtTransform("solve", quaver.transform);
             quaver.Module.HandlePass();
             quaver.init.solved = true;
-            foreach (var item in quaver.init.correctValues)
-            {
-                Debug.Log(item.Join(", "));
-            }
         }
     }
 

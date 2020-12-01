@@ -396,8 +396,6 @@
     <None Include="Assets\Plugins\Managed\KMFramework.XML" />
     <None Include="Assets\Plugins\Managed\Newtonsoft.Json_license.txt" />
     <None Include="Assets\Plugins\Steamworks.NET\redist\steam_appid.txt" />
-    <None Include="Assets\Quaver\Shaders\KT_3D_Text_Layered.shader" />
-    <None Include="Assets\Quaver\Shaders\KT_Mobile-Diffuse-tint-transparent.shader" />
     <None Include="Assets\TestHarness\Shaders\Outline.shader" />
     <None Include="Assets\TestHarness\Widgets\Shaders\3DText.shader" />
     <None Include="Assets\TestHarness\_THIS_FOLDER_IS_EXCLUDED_FROM_BUNDLES.txt" />
