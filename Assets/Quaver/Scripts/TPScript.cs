@@ -173,5 +173,8 @@ public class TPScript : MonoBehaviour
                 yield return new WaitForSecondsRealtime(0.05f);
             }
         }
+
+        if (!Quaver.init.solved)
+            yield return true;
     }
 }
