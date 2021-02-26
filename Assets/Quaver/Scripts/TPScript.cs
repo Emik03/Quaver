@@ -174,7 +174,7 @@ public class TPScript : MonoBehaviour
             }
         }
 
-        if (!Quaver.init.solved)
-            yield return true;
+        while (!Quaver.init.solved)
+            yield return true; 
     }
 }

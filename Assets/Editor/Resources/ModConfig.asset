@@ -27,6 +27,6 @@ MonoBehaviour:
 
 
     Is there a bug? Do you have a question? Discord: @Emik#0001'
-  version: 1.0.4
+  version: 1.0.5
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 2dcd2e190691ac54693b33adf0a3f6ae, type: 3}
