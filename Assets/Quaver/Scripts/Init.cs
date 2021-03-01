@@ -25,7 +25,10 @@ internal class Init
 
     internal void OnActivate()
     {
-        anotherQuaverReady = false; // Resets it if the bomb was quit out while the module was in submission.
+        // Resets static values if the bomb was quit out while the module was in submission.
+        anotherQuaverReady = false;
+        ArrowScript.arrowsPerColumn = new int[4];
+
         render.UpdateSelection();
         moduleId = ++moduleIdCounter;
 
