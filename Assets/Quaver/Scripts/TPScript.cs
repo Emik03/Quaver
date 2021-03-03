@@ -150,6 +150,9 @@ public class TPScript : MonoBehaviour
         Array.Copy(ArrowScript.arrowsPerColumn.Select(x => x.ToString()).ToArray(), 0, correct, 1, 4);
 
         yield return Input(correct);
+
+        while (!Quaver.init.solved)
+            yield return true;
     }
 
     private IEnumerator Input(string[] array)
@@ -173,8 +176,5 @@ public class TPScript : MonoBehaviour
                 yield return new WaitForSecondsRealtime(0.05f);
             }
         }
-
-        while (!Quaver.init.solved)
-            yield return true; 
     }
 }
